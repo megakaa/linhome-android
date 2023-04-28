@@ -63,7 +63,7 @@ class CallViewModel(val call: Call) : ViewModel() {
 
     val callState: MutableLiveData<Call.State> = MutableLiveData(call.state)
     val videoContent: MutableLiveData<Boolean> = MutableLiveData()
-    val videoFullScreen: MutableLiveData<Boolean> = MutableLiveData(false)
+    val videoFullScreen: MutableLiveData<Boolean> = MutableLiveData(true)
 
     val speakerDisabled: MutableLiveData<Boolean> =
             MutableLiveData(coreContext.core.outputAudioDevice?.type != AudioDevice.Type.Speaker)

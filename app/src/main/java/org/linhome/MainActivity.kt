@@ -22,7 +22,11 @@ package org.linhome
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -153,6 +157,14 @@ class MainActivity : GenericActivity() {
         if (!StorageManager.storePrivately)
             startWithPermissionCheck()
 
+        val pm: PowerManager = applicationContext.getSystemService(POWER_SERVICE) as PowerManager
+        if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+            val requestIntent = Intent()
+            requestIntent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+            requestIntent.data = Uri.parse("package:" + "org.linhome")
+            requestIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            applicationContext.startActivity(requestIntent)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
